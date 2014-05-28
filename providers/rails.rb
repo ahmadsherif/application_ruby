@@ -80,8 +80,8 @@ action :before_migrate do
       group new_resource.group
       mode '0755'
     end
-    link "#{new_resource.release_path}/vendor/bundle" do
-      to "#{new_resource.path}/shared/vendor_bundle"
+    execute "ln -s #{new_resource.path}/shared/vendor_bundle #{new_resource.release_path}/vendor/bundle" do
+      action :run
     end
     common_groups = %w{development test cucumber staging production}
     common_groups -= [new_resource.environment_name]
